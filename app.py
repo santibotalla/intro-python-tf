@@ -1,3 +1,7 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# author: Meri
+
 # import the Flask class from the flask module
 from flask import Flask, render_template
 
