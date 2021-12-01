@@ -9,6 +9,9 @@ class Persona(object):
         self.edad = edad
         self.dni = dni
 
+    def __str__(self):
+        return f'Nombre: {self.nombre}'
+
     def mostrar(self):
         print(f"nombre : {self.nombre} edad :{self.edad} dni : {self.dni}")
 
