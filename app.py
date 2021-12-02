@@ -9,15 +9,9 @@ from flask import Flask, render_template
 app = Flask(__name__)
 
 
-# use decorators to link the function to a url
 @app.route('/')
 def home():
-    return "Hello, World!"  # return a string
-
-
-@app.route('/welcome')
-def welcome():
-    return render_template('welcome.html', saludo="Hola chicas de Ada, este es un saludo",
+    return render_template('home-banking.html', saludo="Hola chicas de Ada, este es un saludo",
                            movement="Jueves 2 de Diciembre de 2021. Descripcion del movimiento  $100")
 
 
