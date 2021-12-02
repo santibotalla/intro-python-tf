@@ -17,7 +17,8 @@ def home():
 
 @app.route('/welcome')
 def welcome():
-    return render_template('welcome.html')  # render a template
+    return render_template('welcome.html', saludo="Hola chicas de Ada, este es un saludo",
+                           movement="Jueves 2 de Diciembre de 2021. Descripcion del movimiento  $100")
 
 
 # start the server with the 'run()' method
