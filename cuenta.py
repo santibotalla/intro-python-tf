@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # author: Meri
+import datetime
 
 
 class Cuenta(object):
@@ -42,3 +43,16 @@ class CuentaJoven(Cuenta):
 
     def mostrar(self):
         print(f"CUENTA JOVEN: {self.titular}: {self.cantidad}")
+
+
+class MovimientoCuenta(object):
+
+    def __init__(self, cuenta, descripcion, monto_del_movimiento):
+        self.fecha_y_hora = datetime.datetime.now()
+        self.cuenta = cuenta
+        self.descripcion = descripcion
+        self.monto = monto_del_movimiento
+
+    def __str__(self):
+        # TODO: Completar como pide el ejercicio 3)
+        return f"{self.fecha_y_hora} {self.descripcion} {self.monto}"
