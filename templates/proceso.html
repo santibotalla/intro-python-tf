@@ -89,11 +89,13 @@
 					<div class="navbar-end">
 						<div class="navbar-item">
 							<div class="field is-grouped">
-								<div class="navbar-end">
-									<div class="navbar-item">
-										<input class="input" type="dni" placeholder="Nro de DNI...">
-									</div>
-								</div>
+								<p class="control">
+									<a class="button is-small">
+										<span class="icon">
+											<i class="fa fa-user-plus"></i>
+										</span>
+									</a>
+								</p>
 								<p class="control">
 									<a class="button is-small is-info is-outlined">
 										<span class="icon">
@@ -112,8 +114,14 @@
 			<div class="container">
 				<div class="navbar-menu">
 					<div class="navbar-start">
-						<a class="navbar-item is-active" href="#">Movimientos</a>
-						<a class="navbar-item" href="proceso">Proceso de Archivos</a>
+						<a class="navbar-item" href="/">Movimientos</a>
+						<a class="navbar-item is-active" href="proceso">Proceso de Archivos</a>
+					</div>
+
+					<div class="navbar-end">
+						<div class="navbar-item">
+							<input class="input" type="search" placeholder="Buscar...">
+						</div>
 					</div>
 				</div>
 			</div>
@@ -121,17 +129,30 @@
 		<section class="container">
 		<article class="post">
 			<h4>
-				{{saludo}}
+				Procesamiento de archivos
 			</h4>
 		</article>
 			<div class="columns">
 				<div class="column is-9">
 					<div class="box content">
-						{% for movement in movements %}
 						<article class="post">
-							{{movement}}
+							<form action="http://localhost:5000/procesar_depositos" method="POST" enctype="multipart/form-data">
+								<input type="file" name="file" />
+								<input type="submit" value="Depositos"/>
+							</form>
 						</article>
-						{% endfor %}
+						<article class="post">
+							<form action="http://localhost:5000/procesar_transferencias" method="POST" enctype="multipart/form-data">
+								<input type="file" name="file" />
+								<input type="submit" value="Transferencias"/>
+							</form>
+						</article>
+						<article class="post">
+							<form action="http://localhost:5000/procesar_gastos" method="POST" enctype="multipart/form-data">
+								<input type="file" name="file" />
+								<input type="submit" value="Gastos"/>
+							</form>
+						</article>
 					</div>
 				</div>
 			</div>

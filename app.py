@@ -2,8 +2,10 @@
 # -*- coding: utf-8 -*-
 # author: Meri
 
-# import the Flask class from the flask module
-from flask import Flask, render_template
+import datetime
+
+import flask
+from flask import Flask, render_template, request, redirect
 
 from cuenta import Cuenta, MovimientoCuenta
 from persona import Persona
@@ -11,20 +13,36 @@ from persona import Persona
 # create the application object
 app = Flask(__name__)
 
+# definimos configuraciones
+app.config['UPLOAD_FOLDER'] = './'
+app.config['MAX_CONTENT_PATH'] = 2048
+
+
+@app.route('/uploader', methods=['POST'])
+def uploader_file():
+    # TODO: Reemplazar por cada uno de los procesos
+    if request.method == 'POST':
+        import ipdb;ipdb.set_trace()
+        f = request.files['file']
+        f.save(f.filename)
+        return flask.redirect(flask.url_for('home'), code=302)
+
+
+@app.route('/proceso')
+def proceso():
+    return render_template('proceso.html')
+
 
 @app.route('/')
 def home():
-    persona_titular = Persona("43242342", "Maria Iervasi")
+    dni = request.args.get('dni')
+    # TODO: Reemplazar por obtener Cuenta por dni
+    persona_titular = Persona(dni, "Maria Iervasi", datetime.date(1986,7,3))
     cuenta = Cuenta(persona_titular)
     movimiento = MovimientoCuenta(cuenta, "Esta es una descripcion", 1110)
     return render_template('home-banking.html',
-                           saludo="SALUDO TEST",
-                           movement=str(movimiento))  # TODO: proxima clase, esto es una lista
-
-
-@app.route('/index/ejemplo_vacio')
-def ejemplo_vacio():
-    return "Esto es lo que devolvemos en index/ejemplo_vacio"
+                           saludo=persona_titular.dni,
+                           movements=[movimiento])
 
 
 # start the server with the 'run()' method
