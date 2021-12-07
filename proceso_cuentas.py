@@ -2,21 +2,7 @@
 # -*- coding: utf-8 -*-
 # author: Meri
 import csv
-
-
-def guardar_cuentas(cuentas):
-    """
-    param cuentas: es un diccionario
-    :return: None
-    """
-    # convertir desde el diccionario cuentas a una lista de tuplas
-    lista_de_tuplas = [('nro_de_cuenta', 'titular', 'saldo', 'activa')]
-    for elemento in cuentas:
-        lista_de_tuplas.append(tuple(elemento.values()))
-    archivo = open("cuentas.csv", "w", newline='')
-    archivo_csv = csv.writer(archivo)
-    archivo_csv.writerows(lista_de_tuplas)
-    archivo.close()
+from persona import Persona
 
 
 def crear_cuentas():
@@ -24,10 +10,33 @@ def crear_cuentas():
     param: None
     :return: Lista de diccionarios
     """
-    cuentas = []
+    personas = {}
     archivo = open("personas.csv", "r")
     archivo_csv = csv.reader(archivo)
-    titulos = next(csv_reader)
-    # TODO
+    titulos = next(archivo_csv)
+    for nombre, dni, fecha_nacimiento in archivo_csv:
+        persona = Persona(dni, nombre, fecha_nacimiento)
+        persona.crear_cuenta()
+        # La parte mas importante donde agrego al diccionario
+        # con clave = dni el objecto persona
+        personas[dni] = persona
     archivo.close()
-    return cuentas
+    return personas
+
+
+def procesar_gastos(cuentas, archivo):
+    # TODO: procesar linea a linea del archivo, y aplicar a cada cuenta de las personas
+    # Return: debe devolver las cuentas actualizadas
+    pass
+
+
+def procesar_depositos(cuentas, archivo):
+    # TODO: procesar linea a linea del archivo, y aplicar a cada cuenta de las personas
+    # Return: debe devolver las cuentas actualizadas
+    pass
+
+
+def procesar_transferencias(cuentas, archivo):
+    # TODO: procesar linea a linea del archivo, y aplicar a cada cuenta de las personas
+    # Return: debe devolver las cuentas actualizadas
+    pass

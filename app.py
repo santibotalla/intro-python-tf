@@ -2,13 +2,9 @@
 # -*- coding: utf-8 -*-
 # author: Meri
 
-import datetime
-
 import flask
-from flask import Flask, render_template, request, redirect
-
-from cuenta import Cuenta, MovimientoCuenta
-from persona import Persona
+import proceso_cuentas
+from flask import Flask, render_template, request
 
 # create the application object
 app = Flask(__name__)
@@ -17,15 +13,31 @@ app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = './'
 app.config['MAX_CONTENT_PATH'] = 2048
 
+# definimos nuestros datos en memoria (base de datos)
+lista_de_datos = {}
 
-@app.route('/uploader', methods=['POST'])
-def uploader_file():
-    # TODO: Reemplazar por cada uno de los procesos
+
+# TODO: Reemplazar por cada uno de los procesos
+@app.route('/procesar_depositos', methods=['POST'])
+def procesar_depositos():
     if request.method == 'POST':
-        import ipdb;ipdb.set_trace()
         f = request.files['file']
         f.save(f.filename)
+        # TODO: Tarea
+        # lista_de_datos = proceso_cuentas.procesar_depositos(lista_de_datos, f.filename)
         return flask.redirect(flask.url_for('home'), code=302)
+
+
+@app.route('/procesar_gastos', methods=['POST'])
+def procesar_gastos():
+    # TODO: Tarea. Ejercicio 6
+    pass
+
+
+@app.route('/procesar_transferencias', methods=['POST'])
+def procesar_transferencias():
+    # TODO: Tarea. Ejercicio 6
+    pass
 
 
 @app.route('/proceso')
@@ -33,22 +45,15 @@ def proceso():
     return render_template('proceso.html')
 
 
-@app.route('/')
-def home():
-    dni = request.args.get('dni')
-    # TODO: Reemplazar por obtener Cuenta por dni
-    persona_titular = Persona(dni, "Maria Iervasi", datetime.date(1986,7,3))
-    cuenta = Cuenta(persona_titular)
-    movimiento = MovimientoCuenta(cuenta, "Esta es una descripcion", 1110)
+@app.route('/<int:dni>')
+def home(dni):
+    # TODO: Si no existe, reemplazar saludo por un mensaje que explique que no se envio dni o no existe en nuestra db
+    persona_titular = lista_de_datos[str(dni)]
     return render_template('home-banking.html',
-                           saludo=persona_titular.dni,
-                           movements=[movimiento])
+                           saludo=persona_titular.saludo(),
+                           movements=[persona_titular.obtener_todos_los_movimientos()])
 
 
-# start the server with the 'run()' method
 if __name__ == '__main__':
-    # TODO: crear_cuentas
-    # TODO: procesar_depositos
-    # TODO: procesar_gastos
-    # TODO: procesar_transferencias
+    lista_de_datos = proceso_cuentas.crear_cuentas()
     app.run(debug=True)
