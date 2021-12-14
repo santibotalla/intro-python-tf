@@ -51,7 +51,7 @@ def home(dni):
     persona_titular = lista_de_datos[str(dni)]
     return render_template('home-banking.html',
                            saludo=persona_titular.saludo(),
-                           movements=[persona_titular.obtener_todos_los_movimientos()])
+                           movements=persona_titular.obtener_todos_los_movimientos())
 
 
 if __name__ == '__main__':

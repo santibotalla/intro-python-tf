@@ -90,19 +90,17 @@
 						<div class="navbar-item">
 							<div class="field is-grouped">
 								<div class="navbar-end">
-									<div class="navbar-item">
-										<input class="input" type="dni" placeholder="Nro de DNI...">
-									</div>
-								</div>
-								<p class="control">
-									<a class="button is-small is-info is-outlined">
-										<span class="icon">
-											<i class="fa fa-user"></i>
-										</span>
-										<span>Ingresar</span>
-									</a>
-								</p>
-							</div>
+                                    <div class="navbar-item">
+                                        <input class="input is-small" type="text" id="dni" placeholder="Nro de DNI...">
+                                    </div>
+                                </div>
+                                <p class="control">
+                                    <button class="button is-small is-info is-outlined" onclick="searchByDNI()">
+                                        <span class="icon"><i class="fa fa-user"></i></span>
+                                        <span>Buscar</span>
+                                    </button>
+                                </p>
+                            </div>
 						</div>
 					</div>
 				</div>
@@ -136,5 +134,17 @@
 				</div>
 			</div>
 		</section>
+        <script>
+            function searchByDNI() {
+                const dni = document.getElementById('dni').value.trim();
+                if (dni === null || dni === undefined || dni === '') {
+                  window.location.href='/';
+                } else if (isNaN(dni)){
+                  alert('El valor ingresado no es un número');
+                } else {
+                  window.location.href=`/${dni}`;
+                }
+            }
+        </script>
 	</body>
 </html>

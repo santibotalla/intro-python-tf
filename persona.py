@@ -43,6 +43,7 @@ class Persona(object):
         todos_los_movimientos = []
         for cuenta in self.cuentas:
             todos_los_movimientos += cuenta.movimientos
+        return todos_los_movimientos
 
     def saludo(self):
         # TODO: Saludo que indique hora fecha y clima
