@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # author: Meri
+from sqlalchemy import DateTime, Integer, String, Column
+from app import db
+
 import datetime
 
 from cuenta import Cuenta
@@ -14,7 +17,12 @@ def convertir_fecha(string_fecha):
     return datetime.date(int(anio), int(mes), int(dia))
 
 
-class Persona(object):
+class Persona(db.Model):
+    __tablename__ = 'personas'
+    id = Column(Integer, primary_key=True)
+    nombre = Column(String(100), nullable=False)
+    fecha_nacimiento = Column(DateTime, nullable=False)
+    dni = Column(String(8), nullable=False)
 
     def __init__(self, dni, nombre, str_fecha_nacimiento):
         self.nombre = nombre
