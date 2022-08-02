@@ -1,3 +1,2 @@
 Flask
 ipdb
-Flask-Sqlalchemy
