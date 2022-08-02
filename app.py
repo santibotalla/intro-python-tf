@@ -5,13 +5,10 @@
 import flask
 from flask import Flask, render_template, request
 
-from flask_sqlalchemy import SQLAlchemy
-import config
+import proceso_cuentas
 
-# create the application object
+# Creación de la App
 app = Flask(__name__)
-app.config.from_object(config)
-db = SQLAlchemy(app)
 
 # definimos configuraciones
 app.config['UPLOAD_FOLDER'] = './'
@@ -50,7 +47,6 @@ def proceso():
 
 @app.route('/')
 def home():
-    dni = request.args.get('dni')
     # TODO: Si no existe, reemplazar saludo por un mensaje que explique que no se envio dni o no existe en nuestra db
     persona_titular = lista_de_datos[str(dni)]
     return render_template('home-banking.html',
@@ -59,6 +55,6 @@ def home():
 
 
 if __name__ == '__main__':
-    import proceso_cuentas
+    
     lista_de_datos = proceso_cuentas.crear_cuentas()
     app.run(debug=True)
